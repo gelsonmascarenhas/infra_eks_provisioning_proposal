@@ -23,7 +23,7 @@ I only know 2 ways to deploy EKS cluster on AWS
 #### Terraform: 
 * Its the popular IaC (Infrastructure as Code) tool to create infrastructure in declarative way. Using this tool, 118 
   will be able to create servers, clusters or any other infra on on-premises, AWS, or even Azure, GCP, IBM Cloud and many more if they so desire to migrate to those Cloudinfrastructure.
-  It is specially useful to 118 because of it hybrid/multi-cloud environment.
+  It is specially useful to 118 because of it hybrid/multi legacy environment.
 
 ## Creating EKS cluster Using `eksctl`
 - Prerequisite: ekstl cli tool needs to be installed on laptop. 
