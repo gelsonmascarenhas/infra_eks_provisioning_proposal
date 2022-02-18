@@ -4,7 +4,7 @@
 This project contains the three modules
 * **cluster-autoscaler**: Contains yaml file of cluster-autoscaler to scale out ans scale down the EKS cluster nodes. 
 * **metrics-server**: Contains metrics server yaml files to deploy the metrics server. This server is needed to collect the metrics from pods.
-* **tf-eks-demo**: Contains terraform scripts to deploy infrastructure in declarative format. 
+* **tf-eks**: Contains terraform scripts to deploy infrastructure in declarative format. 
 * **HPA(Horizontal Pod Autoscaler)**: - To scale out and scale down the pods on nodes.
 
 I created the following infrastructure on AWS with the instructions given below.
@@ -15,14 +15,14 @@ I created the following infrastructure on AWS with the instructions given below.
 - Deploying Metrics-Server
 - Deploying php-apache service 
 
-There are 2 ways we can deploy EKS cluster on AWS
+I only know 2 ways to deploy EKS cluster on AWS
 
 #### Eksctl tool: 
 * It's a new CLI tool from AWS to create EKS clusters. It uses CloudFormation in background to create the clusters.
 
 #### Terraform: 
-* Its another popular IaC (Infrastructure as Code) tool to create infrastructure in declarative way. Using this tool, 118 
-  will be able to create servers, clusters or any other infra on on-premises, AWS, Azure, GCP, IBM Cloud and many more.
+* Its the popular IaC (Infrastructure as Code) tool to create infrastructure in declarative way. Using this tool, 118 
+  will be able to create servers, clusters or any other infra on on-premises, AWS, or even Azure, GCP, IBM Cloud and many more if they so desire to migrate to those Cloudinfrastructure.
   It is specially useful to 118 because of it hybrid/multi-cloud environment.
 
 ## Creating EKS cluster Using `eksctl`
@@ -49,17 +49,17 @@ metadata:
 
 nodeGroups:
   - name: ng-1
-    instanceType: m5.large
+    instanceType: m5.large <--for cost saving perhaps I'll use t3.micro for 2 hours and then destroy it.
     desiredCapacity: 10
   - name: ng-2
-    instanceType: m5.xlarge
+    instanceType: m5.xlarge <--this too I may use the t3.micro under 2hrs for testing puposes.
     desiredCapacity: 2
 ````
 
 ## Creating EKS cluster with Terraform Scripts
  - Prerequisite: kubectl & aws-iam-authenticator cli tools need to be installed on laptop.
  
-There are terraform scripts in "tf-eks-demo" folder. By running the following commands terraform creates
+There are terraform scripts in "tf-eks-proposal" folder. By running the following commands terraform creates
 EC2 instance and EKS cluster for us in the desired region. All the required configs are defined in respective script, 
 like IAM roles, policies, security groups, etc.
 Before executing the below scripts the user must have created an IAM role and needs to be configured
@@ -178,7 +178,7 @@ kubectl delete hpa,service,deployment php-apache
 kubectl delete pod load-generator
 ````
 
-Buy ingesting more load with the script, the php-apache will get scaled up( I gave --max=20) by Horizontal Pod Autoscaler.
+By ingesting more load with the script, the php-apache will get scaled up( I gave --max=20) by Horizontal Pod Autoscaler.
 So whenever it created more pods on worker nodes, it will increase the load on cluster, the Cluster Autoscaler jumps up
 and will create new worker nodes to handle the load.
 
