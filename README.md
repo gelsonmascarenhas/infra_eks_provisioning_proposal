@@ -208,8 +208,8 @@ There are configurations set on cluster-autoscaler.yaml file to when to scale up
             - --skip-nodes-with-system-pods=false
 ````
  
-To undeploy infra on, first delete the manually created security group policy and run the following command. This will ensure all the infra is deleted
+To undeploy infra on, first I'll delete the manually created security group policy and run the following command. This will ensure all the infra is deleted
 ````
-cd tf-eks-demo
+cd tf-eks-proposal
 terraform destroy
 ````
